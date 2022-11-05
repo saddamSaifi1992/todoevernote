@@ -27,15 +27,6 @@ export default function NoteBody() {
 		},
 	});
 
-	const getNotes = () => {
-		getDocs(dbInstance).then((data) => {
-			setNotesArray(
-				data.docs.map((item) => {
-					return { ...item.data(), id: item.id };
-				})
-			);
-		});
-	};
 	const deleteNote = (id) => {
 		const collectionById = doc(database, "notes", id);
 
@@ -58,6 +49,15 @@ export default function NoteBody() {
 		});
 	};
 	useEffect(() => {
+		const getNotes = () => {
+			getDocs(dbInstance).then((data) => {
+				setNotesArray(
+					data.docs.map((item) => {
+						return { ...item.data(), id: item.id };
+					})
+				);
+			});
+		};
 		getNotes();
 	}, []);
 	return (
